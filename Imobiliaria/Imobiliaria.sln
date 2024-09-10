@@ -1,0 +1,68 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Apresentacao", "1-Apresentacao", "{98FCDA51-0742-44F7-A572-FD785574703E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Dominio", "2-Dominio", "{0D8DDF05-094C-47CF-AAC3-BA036A693392}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-DAO", "3-DAO", "{E20574AB-ED83-467A-B2AB-2718E303C3E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Testes", "4-Testes", "{E3A54A6E-C285-4B14-97C6-D784CF4271E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-DOcs", "5-DOcs", "{1D1978DC-4F05-4CF2-9F2A-AC002B2854F6}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliarias", "Imobiliarias\Imobiliarias.csproj", "{F19AF854-29B5-4EBC-80FF-854255A8CF91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliaria.Dominio", "Dominio\Imobiliaria.Dominio.csproj", "{8D106119-A88F-4235-9779-7767AD91EBD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAO", "DAO\DAO.csproj", "{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliaria.Testes", "Imobiliaria.Testes\Imobiliaria.Testes.csproj", "{20382D7F-57D2-4DF7-BFD3-F661AAF93792}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{7683F6CC-4D4C-44A0-83CF-A954FB6BA614}"
+	ProjectSection(SolutionItems) = preProject
+		..\Docs\DataBase.sql\Script_Inicial.sql = ..\Docs\DataBase.sql\Script_Inicial.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F19AF854-29B5-4EBC-80FF-854255A8CF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F19AF854-29B5-4EBC-80FF-854255A8CF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F19AF854-29B5-4EBC-80FF-854255A8CF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F19AF854-29B5-4EBC-80FF-854255A8CF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D106119-A88F-4235-9779-7767AD91EBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D106119-A88F-4235-9779-7767AD91EBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D106119-A88F-4235-9779-7767AD91EBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D106119-A88F-4235-9779-7767AD91EBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20382D7F-57D2-4DF7-BFD3-F661AAF93792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20382D7F-57D2-4DF7-BFD3-F661AAF93792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20382D7F-57D2-4DF7-BFD3-F661AAF93792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20382D7F-57D2-4DF7-BFD3-F661AAF93792}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F19AF854-29B5-4EBC-80FF-854255A8CF91} = {98FCDA51-0742-44F7-A572-FD785574703E}
+		{8D106119-A88F-4235-9779-7767AD91EBD6} = {0D8DDF05-094C-47CF-AAC3-BA036A693392}
+		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A} = {E20574AB-ED83-467A-B2AB-2718E303C3E4}
+		{20382D7F-57D2-4DF7-BFD3-F661AAF93792} = {E3A54A6E-C285-4B14-97C6-D784CF4271E4}
+		{7683F6CC-4D4C-44A0-83CF-A954FB6BA614} = {1D1978DC-4F05-4CF2-9F2A-AC002B2854F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13A5BF1A-730B-4FC4-A7B9-A130392D815E}
+	EndGlobalSection
+EndGlobal
