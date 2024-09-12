@@ -1,30 +1,42 @@
+using DAO;
 using Imobiliarias;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ImobiliariaDbContext>();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 {
-	app.UseExceptionHandler("/Home/Error");
-	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-	app.UseHsts();
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			//SEED
+
+
+			var builder = WebApplication.CreateBuilder(args);
+
+			// Add services to the container.
+			builder.Services.AddControllersWithViews();
+			//IOC
+			//Injeção de dependencia
+			builder.Services.AddTransient<ImobiliariaDbContext>();
+			builder.Services.Configure<ConnectionStrings>(
+				builder.Configuration.GetSection("ConnectionStrings"));
+
+			var app = builder.Build();
+
+
+			var db = app.Services.GetService<ImobiliariaDbContext>();
+			//db.Seed();
+
+			// Configure the HTTP request pipeline.
+			if (!app.Environment.IsDevelopment())
+			{
+				app.UseExceptionHandler("/Home/Error");
+			}
+			app.UseStaticFiles();
+			app.UseRouting();
+			app.UseAuthorization();
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Clientes}/{action=Index}/{id?}");
+			app.Run();
+		}
+	}
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
