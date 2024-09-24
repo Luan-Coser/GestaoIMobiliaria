@@ -1,4 +1,6 @@
 using DAO;
+using DAO.Repositorios.EF.ModuloCliente;
+using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliarias;
 namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 {
@@ -17,8 +19,9 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 			//Injeção de dependencia
 			builder.Services.AddTransient<ImobiliariaDbContext>();
 			builder.Services.Configure<ConnectionStrings>(
-				builder.Configuration.GetSection("ConnectionStrings"));
-
+			builder.Configuration.GetSection("ConnectionStrings"));
+			builder.Services.AddTransient<IServiceCliente,ServiceCliente>();
+			builder.Services.AddTransient<IClienteRepositorio,ClienteRepositorio>();
 			var app = builder.Build();
 
 
