@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Imobiliarias;
 
-namespace Imobiliarias;
+namespace Imobiliaria.Dominio.ModuloCorretor;
 
-public partial class Corretore
+public partial class Corretor
 {
     public int CorretorId { get; set; }
 

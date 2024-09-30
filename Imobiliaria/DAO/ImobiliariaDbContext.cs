@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAO;
+using Imobiliaria.Dominio.ModuloCorretor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -25,7 +26,7 @@ public partial class ImobiliariaDbContext : DbContext
 
     public virtual DbSet<Cliente> Clientes { get; set; }
 
-    public virtual DbSet<Corretore> Corretores { get; set; }
+    public virtual DbSet<Corretor> Corretores { get; set; }
 
     public virtual DbSet<Favorito> Favoritos { get; set; }
 
@@ -52,7 +53,7 @@ public partial class ImobiliariaDbContext : DbContext
             entity.Property(e => e.Telefone).HasMaxLength(20);
         });
 
-        modelBuilder.Entity<Corretore>(entity =>
+        modelBuilder.Entity<Corretor>(entity =>
         {
             entity.HasKey(e => e.CorretorId).HasName("PK__Corretor__4878C58F4DD00BB9");
 

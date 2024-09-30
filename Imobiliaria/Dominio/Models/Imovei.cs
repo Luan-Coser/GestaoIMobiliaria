@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Imobiliaria.Dominio.ModuloCorretor;
 
 namespace Imobiliarias;
 
@@ -31,9 +32,9 @@ public partial class Imovei
 
     public virtual Cliente ClienteDono { get; set; } = null!;
 
-    public virtual Corretore CorretorGestor { get; set; } = null!;
+    public virtual Corretor CorretorGestor { get; set; } = null!;
 
-    public virtual Corretore? CorretorNegocio { get; set; }
+    public virtual Corretor? CorretorNegocio { get; set; }
 
     public virtual ICollection<Favorito> Favoritos { get; set; } = new List<Favorito>();
 

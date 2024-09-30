@@ -39,8 +39,6 @@ namespace Imobiliarias.Controllers
                 return NotFound();
             }  
             
-            //var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.ClienteId == id);
-
             var cliente = ServiceCliente.TragaClienteId(id.Value);
             ClienteViewModel clienteViewModel = cliente.ToClienteViewModel();
 
@@ -104,7 +102,7 @@ namespace Imobiliarias.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ClienteViewModel cliente)
+         public async Task<IActionResult> Edit(int id, ClienteViewModel cliente)
         {
             if (id != cliente.ClienteId)
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Imobiliaria.Dominio.ModuloCliente
 {
-    public interface IServiceCliente
+	public interface IServiceCliente
     {
         void CriarCliente(Cliente cliente);
         List<Cliente> TrazerClientes();
