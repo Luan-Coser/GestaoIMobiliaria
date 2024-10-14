@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Imobiliaria.Dominio.ModuloCorretor;
+using Imobiliarias;
 
-namespace Imobiliarias;
+namespace Imobiliaria.Dominio.ModuloImovel;
 
-public partial class Imovei
+public partial class Imovel
 {
     public int ImovelId { get; set; }
 

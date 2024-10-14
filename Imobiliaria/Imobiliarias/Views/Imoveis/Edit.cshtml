@@ -1,4 +1,4 @@
-﻿@model Imobiliarias.Imovei
+﻿@model Imobiliarias.Models.EditarImovelViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -64,9 +64,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Fotos" class="control-label"></label>
-                <input asp-for="Fotos" class="form-control" />
-                <span asp-validation-for="Fotos" class="text-danger"></span>
+                <partial name="_ImgEditar" model="Model.Fotos" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

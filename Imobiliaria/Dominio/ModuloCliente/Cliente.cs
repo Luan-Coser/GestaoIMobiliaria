@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Imobiliaria.Dominio.ModuloImovel;
 
 namespace Imobiliarias;
 
@@ -17,7 +18,7 @@ public partial class Cliente
 
     public virtual ICollection<Favorito> Favoritos { get; set; } = new List<Favorito>();
 
-    public virtual ICollection<Imovei> Imoveis { get; set; } = new List<Imovei>();
+    public virtual ICollection<Imovel> Imoveis { get; set; } = new List<Imovel>();
 
     public virtual ICollection<MensagensContato> MensagensContatos { get; set; } = new List<MensagensContato>();
 }

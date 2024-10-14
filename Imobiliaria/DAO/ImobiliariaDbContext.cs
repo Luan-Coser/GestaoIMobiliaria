@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DAO;
 using Imobiliaria.Dominio.ModuloCorretor;
+using Imobiliaria.Dominio.ModuloImovel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -30,7 +31,7 @@ public partial class ImobiliariaDbContext : DbContext
 
     public virtual DbSet<Favorito> Favoritos { get; set; }
 
-    public virtual DbSet<Imovei> Imoveis { get; set; }
+    public virtual DbSet<Imovel> Imoveis { get; set; }
 
     public virtual DbSet<MensagensContato> MensagensContatos { get; set; }
 
@@ -87,7 +88,7 @@ public partial class ImobiliariaDbContext : DbContext
                 .HasConstraintName("FK__Favoritos__Imove__46E78A0C");
         });
 
-        modelBuilder.Entity<Imovei>(entity =>
+        modelBuilder.Entity<Imovel>(entity =>
         {
             entity.HasKey(e => e.ImovelId).HasName("PK__Imoveis__68DA341C791DE99C");
 

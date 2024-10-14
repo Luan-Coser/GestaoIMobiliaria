@@ -1,8 +1,10 @@
 using DAO;
 using DAO.Repositorios.EF.ModuloCliente;
 using DAO.Repositorios.EF.ModuloCorretor;
+using DAO.Repositorios.EF.ModuloImovel;
 using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliaria.Dominio.ModuloCorretor;
+using Imobiliaria.Dominio.ModuloImovel;
 using Imobiliarias;
 namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 {
@@ -28,6 +30,10 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 
 			builder.Services.AddTransient<IServiceCorretor,ServiceCorretor>();
 			builder.Services.AddTransient<ICorretorRepositorio,CorretorRepositorio>();
+
+			builder.Services.AddTransient<IServiceImovel, ServiceImovel>();
+			builder.Services.AddTransient<IImovelRepositorio, ImovelRepositorio>();
+
 			var app = builder.Build();
 
 

@@ -85,8 +85,6 @@ namespace Imobiliarias.Controllers
                 return NotFound();
             }
             var cliente = ServiceCliente.TragaClienteId(id.Value);
-
-            //var cliente = await _context.Clientes.FindAsync(id);
             ClienteViewModel clienteViewModel = cliente.ToClienteViewModel();
 
             if (cliente == null)
@@ -138,8 +136,6 @@ namespace Imobiliarias.Controllers
             }
             var cliente = ServiceCliente.TragaClienteId(id.Value);
 
-            //var cliente = await _context.Clientes
-            //    .FirstOrDefaultAsync(m => m.ClienteId == id);
             if (cliente == null)
             {
                 return NotFound();

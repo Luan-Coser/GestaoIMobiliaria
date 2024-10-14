@@ -1,15 +1,17 @@
-﻿@model Imobiliarias.Imovei
+﻿@model Imobiliarias.Models.ImovelViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Datalhes</h1>
 
 <div>
-    <h4>Imovei</h4>
+    <h4>Imovel</h4>
     <hr />
+    <partial name="_Carrossel" model="Model.Fotos"/>
     <dl class="row">
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Endereco)
         </dt>
@@ -52,29 +54,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Disponivel)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fotos)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeClienteDono)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fotos)
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeCorretorGestor)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClienteDono)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClienteDono.Cpf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CorretorGestor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CorretorGestor.Cpf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CorretorNegocio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CorretorNegocio.Cpf)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeCorretorNegociador)
         </dd>
     </dl>
 </div>

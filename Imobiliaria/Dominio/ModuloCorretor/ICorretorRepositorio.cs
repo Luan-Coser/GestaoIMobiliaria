@@ -11,5 +11,4 @@ namespace Imobiliaria.Dominio.ModuloCorretor
 		void RemoverCorretor(int id);
 		bool CorretorCpf(string cpf, int id);
 		bool CorretorCreci(string creci, int id);
-	}
-}
+	}	}
