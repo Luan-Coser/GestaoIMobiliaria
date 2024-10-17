@@ -1,12 +1,2 @@
 ﻿@model List<string>
 
-@for (int i = 0; i < Model.Count; i++)
-{
-    <div class="row-10">
-        <!-- Imagem clicável -->
-        <img src="@Model[i]" class="d-block w-25 h-25 img-fluid" href="" id="image-@i" onclick="document.getElementById('file-input-@i').click();" style="cursor: pointer;" />
-
-        <!-- Input file invisível -->
-        <input type="file" id="file-input-@i" style="display: none;" onchange="uploadImage(this, @i)" />
-    </div>
-}

@@ -104,9 +104,10 @@ namespace Imobiliarias.Models
         public bool Disponivel { get; set; }
 
         public List <string>? Fotos { get; set; }
-        public string FotoDeCapa { get; set; }
 
-    }
+		public List<IFormFile>? ArquivosFotos { get; set; }
+
+	}
 
     public static class ImovelViewModelExtends {
         public static ImovelViewModel ToImovelViewModel(this Imovel imovel)
@@ -116,7 +117,9 @@ namespace Imobiliarias.Models
 			if (string.IsNullOrEmpty(imovel.Fotos) is false)
 			{
                 imovelViewModel.Fotos =  JsonConvert.DeserializeObject<List<string>>(imovel.Fotos);
-				fotoDeCapa = imovelViewModel.Fotos.First();
+                if (imovelViewModel.Fotos.Count > 0)
+                { fotoDeCapa = imovelViewModel.Fotos.First(); }
+				
 			}
             imovelViewModel.ImovelId = imovel.ImovelId;
             imovelViewModel.Endereco = imovel.Endereco;
@@ -137,12 +140,12 @@ namespace Imobiliarias.Models
         public static EditarImovelViewModel ToImovelViewModelEditar(this Imovel imovel)
         {
             EditarImovelViewModel imovelViewModel = new EditarImovelViewModel();
-            string fotoDeCapa = "/imagens/not-found.png";
             if (string.IsNullOrEmpty(imovel.Fotos) is false)
             {
                 imovelViewModel.Fotos = JsonConvert.DeserializeObject<List<string>>(imovel.Fotos);
-                fotoDeCapa = imovelViewModel.Fotos.First();
+
             }
+            else { imovelViewModel.Fotos = new(); }
             imovelViewModel.ImovelId = imovel.ImovelId;
             imovelViewModel.Endereco = imovel.Endereco;
             imovelViewModel.Tipo = imovel.Tipo;
@@ -154,9 +157,8 @@ namespace Imobiliarias.Models
             imovelViewModel.CorretorNegocioId = imovel.CorretorNegocioId;
             imovelViewModel.ClienteDonoId = imovel.ClienteDonoId;
             imovelViewModel.Disponivel = imovel.Disponivel;
-            imovelViewModel.FotoDeCapa = fotoDeCapa;
 
-            return imovelViewModel;
+			return imovelViewModel;
         }
         public static List<ImovelViewModel> ToImoveisViewModelList(this List<Imovel> imovels)
         {
@@ -189,12 +191,7 @@ namespace Imobiliarias.Models
         public static Imovel ToImovelModel(this EditarImovelViewModel imovelViewModel)
         {
             Imovel imovel = new Imovel();
-            string fotoDeCapa = "/imagens/not-found.png";
-            if (string.IsNullOrEmpty(imovel.Fotos) is false)
-            {
-                imovelViewModel.Fotos = JsonConvert.DeserializeObject<List<string>>(imovel.Fotos);
-                fotoDeCapa = imovelViewModel.Fotos.First();
-            }
+
             imovel.ImovelId = imovelViewModel.ImovelId;
             imovel.Endereco = imovelViewModel.Endereco;
             imovel.Tipo = imovelViewModel.Tipo;
@@ -206,7 +203,7 @@ namespace Imobiliarias.Models
             imovel.CorretorGestorId = imovelViewModel.CorretorGestorId;
             imovel.ClienteDonoId = imovelViewModel.ClienteDonoId;
             imovel.Disponivel = imovelViewModel.Disponivel;
-            imovelViewModel.FotoDeCapa = fotoDeCapa;
+            imovel.Fotos = JsonConvert.SerializeObject(imovelViewModel.Fotos);
             return imovel;
         }
     }

@@ -74,28 +74,7 @@ namespace Imobiliarias.Controllers
                 {
                     
                     var imovelId = serviceImovel.CriarImovel(imovel.ToimovelModel());
-                    if (imovel.ArquivosFotos is not null) {
-                        var fotosUrls = new List<string>();
-                        foreach (var item in imovel.ArquivosFotos)
-                        {
-                            var fileVirtualPath = $"fotos/{imovelId}/";
-                            var directoryImovel = Path.Combine("wwwroot", fileVirtualPath);
-                            if (Directory.Exists(directoryImovel) is false)
-                            {
-                                Directory.CreateDirectory(directoryImovel);
-                            }
-                            fileVirtualPath += "/" + item.FileName;
-                            var filePath = Path.Combine(directoryImovel, item.FileName);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await item.CopyToAsync(stream);
-                            }
-                            fotosUrls.Add("/"+fileVirtualPath);
-                        }
-                        var imovelDB = serviceImovel.TragaImovelId(imovelId);
-                        imovelDB.Fotos = JsonConvert.SerializeObject(fotosUrls);
-                        serviceImovel.SalvarImovel(imovelDB);
-                    }
+                    serviceImovel.UploadImg(imovelId, imovel.ArquivosFotos);
                     return RedirectToAction(nameof(Index));
 
                 }
@@ -132,30 +111,31 @@ namespace Imobiliarias.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EditarImovelViewModel imovel)
+        public async Task<IActionResult> Edit(EditarImovelViewModel model, List<string> FotosRemover)
         {
-            if (id != imovel.ImovelId)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
 
+			if (ModelState.IsValid)
+			{
 
-                try
-                {
-                    serviceImovel.SalvarImovel(imovel.ToImovelModel());
-                    return RedirectToAction(nameof(Index));
+				try
+				{
 
+					serviceImovel.SalvarImovel(model.ToImovelModel());
+
+					serviceImovel.UploadImg(model.ImovelId, model.ArquivosFotos);
+
+					serviceImovel.RemoveImg(model.ImovelId, FotosRemover);
+
+					return RedirectToAction(nameof(Index));
+
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("", ex.Message);
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
 
-                return RedirectToAction(nameof(Index));
             }
-            return View(imovel);
+            return View(model);
 
         }
     

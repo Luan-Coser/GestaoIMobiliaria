@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form enctype="multipart/form-data" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ImovelId" />
             <div class="form-group">
@@ -64,12 +64,32 @@
                 </label>
             </div>
             <div class="form-group">
-                <partial name="_ImgEditar" model="Model.Fotos" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <h4>Fotos Atuais</h4>
+                <div class="row">
+                    @for (int i = 0; i < Model.Fotos.Count; i++)
+                    {
+                        <div class="col-md-3">
+                            <div class="thumbnail">
+                                <img src="@Model.Fotos[i]" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="FotosRemover[]" value="@Model.Fotos[i]" id="fotoCheck@i" />
+									<label class="form-check-label" for="fotoCheck@i">Remover</label>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="Fotos[]" value="@Model.Fotos[i]" id="foto@i" />
+					}
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="ArquivosFotos" class="control-label"></label>
+				<input asp-for="ArquivosFotos" class="form-control" />
+				<span asp-validation-for="ArquivosFotos" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
     </div>
 </div>
 

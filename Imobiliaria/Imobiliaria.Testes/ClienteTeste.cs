@@ -1,6 +1,6 @@
 namespace Imobiliaria.Testes
 {
-	public class UnitTest1
+	public class ClienteTeste
 	{
 		[Fact]
 		public void Test1()
