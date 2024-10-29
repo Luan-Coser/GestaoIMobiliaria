@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Imobiliarias.Models
 
 {
-    public class ClienteViewModel
+	public class ClienteViewModel
     {
         public int ClienteId { get; set; }
 

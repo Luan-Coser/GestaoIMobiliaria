@@ -5,7 +5,9 @@ using DAO.Repositorios.EF.ModuloImovel;
 using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliaria.Dominio.ModuloImovel;
+using Imobiliaria.Dominio.ModuloLogin;
 using Imobiliarias;
+using Microsoft.AspNetCore.Authentication.Cookies;
 namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 {
 	public class Program
@@ -19,9 +21,20 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
-			//IOC
-			//Injeção de dependencia
-			builder.Services.AddTransient<ImobiliariaDbContext>();
+            builder.Services.AddAuthentication(
+				CookieAuthenticationDefaults.AuthenticationScheme
+				).AddCookie(options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                    options.SlidingExpiration = true;
+                    options.AccessDeniedPath = "/Login/Denied/";
+                    options.LoginPath = "/Login/Login"; // Defenir página de login
+                    options.LogoutPath = "/Login/Logout"; // Defenir página logout
+                });
+
+            //IOC
+            //Injeção de dependencia
+            builder.Services.AddTransient<ImobiliariaDbContext>();
 			builder.Services.Configure<ConnectionStrings>(
 			builder.Configuration.GetSection("ConnectionStrings"));
 
@@ -33,6 +46,8 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 
 			builder.Services.AddTransient<IServiceImovel, ServiceImovel>();
 			builder.Services.AddTransient<IImovelRepositorio, ImovelRepositorio>();
+
+			builder.Services.AddTransient<IServiceLogin, ServiceLogin>();
 
 			var app = builder.Build();
 
@@ -47,7 +62,8 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 			}
 			app.UseStaticFiles();
 			app.UseRouting();
-			app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Clientes}/{action=Index}/{id?}");

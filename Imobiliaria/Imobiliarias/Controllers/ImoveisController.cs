@@ -10,10 +10,12 @@ using Imobiliarias.Models;
 using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Imobiliarias.Controllers
 {
-    public class ImoveisController : Controller
+	[Authorize]
+	public class ImoveisController : Controller
     {
         public IServiceImovel serviceImovel { get; }
         public IServiceCliente serviceCLiente { get; }

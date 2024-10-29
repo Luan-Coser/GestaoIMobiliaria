@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliarias.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Imobiliarias.Controllers
 {
-    public class CorretoresController : Controller
+	[Authorize]
+	public class CorretoresController : Controller
     {
         public IServiceCorretor ServiceCorretor { get; }
 

@@ -19,6 +19,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity.IsAuthenticated){
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Favoritos" asp-action="Index">Favoritos</a>
                         </li>
@@ -33,19 +34,34 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Imoveis" asp-action="Index">Imoveis</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MensagensContatoes" asp-action="Index">MensagensContatoes</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="MensagensContatoes" asp-action="Index">MensagensContatoes</a>
+							</li>
+							<li class="nav-item float-end">
+								<p class="nav-link text-dark">
+									🧑 Welcome, @User.Identity.Name
+								</p>
+							</li>
+							<li class="nav-item ">
+								<a class="nav-link" asp-area="" asp-controller="Login" asp-action="Logout">🚪 Logout</a>
+							</li>
+						}
+						else
+						{
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Login" asp-action="Login">🚀 Login</a>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
     </div>
 
     <footer class="border-top footer text-muted">

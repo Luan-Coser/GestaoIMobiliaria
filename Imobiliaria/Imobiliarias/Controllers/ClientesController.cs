@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Imobiliarias;
 using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliarias.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Imobiliarias.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
+        
         public IServiceCliente ServiceCliente { get; }
 
         //private readonly ImobiliariaDbContext _context;
