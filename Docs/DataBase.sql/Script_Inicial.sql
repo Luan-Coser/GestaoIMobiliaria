@@ -74,3 +74,4 @@ CREATE TABLE MensagensContato (
     FOREIGN KEY (CorretorId) REFERENCES Corretores(CorretorId)
 );
 GO
+

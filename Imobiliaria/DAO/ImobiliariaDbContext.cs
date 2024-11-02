@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DAO;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliaria.Dominio.ModuloImovel;
+using Imobiliaria.Dominio.ModuloLogin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -32,6 +33,8 @@ public partial class ImobiliariaDbContext : DbContext
     public virtual DbSet<Favorito> Favoritos { get; set; }
 
     public virtual DbSet<Imovel> Imoveis { get; set; }
+    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public virtual DbSet<Perfil> Perfis { get; set; }
 
     public virtual DbSet<MensagensContato> MensagensContatos { get; set; }
 
