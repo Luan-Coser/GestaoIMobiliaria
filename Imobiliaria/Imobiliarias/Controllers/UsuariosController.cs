@@ -5,25 +5,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Imobiliaria.Dominio.ModuloLogin;
 using Imobiliarias;
+using Imobiliarias.Models;
+using Imobiliaria.Dominio.ModuloCliente;
+using Imobiliaria.Dominio.ModuloCorretor;
+using Imobiliaria.Dominio.ModuloUsuario;
 
 namespace Imobiliarias.Controllers
 {
     public class UsuariosController : Controller
     {
-        private readonly ImobiliariaDbContext _context;
-
-        public UsuariosController(ImobiliariaDbContext context)
+		private readonly IServiceUsuario _serviceUsuario;
+		private readonly IServiceCliente _serviceCliente;
+		private readonly IServiceCorretor _serviceCorretor;
+		public UsuariosController(
+			IServiceUsuario serviceUsuario,
+			IServiceCliente serviceCliente,
+			IServiceCorretor serviceCorretor)
+		{
+			_serviceUsuario = serviceUsuario;
+			_serviceCliente = serviceCliente;
+			_serviceCorretor = serviceCorretor;
+		}
+		// GET: Usuarios
+		public async Task<IActionResult> Index()
         {
-            _context = context;
-        }
-
-        // GET: Usuarios
-        public async Task<IActionResult> Index()
-        {
-            var imobiliariaDbContext = _context.Usuarios.Include(u => u.Cliente).Include(u => u.Corretor).Include(u => u.Perfil);
-            return View(await imobiliariaDbContext.ToListAsync());
+            List<Usuario> UsuarioVO = _serviceUsuario.TragaTodos();
+            return View(UsuarioVO.ToUsuariosViewModelList());
         }
  
         // GET: Usuarios/Details/5
@@ -34,25 +42,22 @@ namespace Imobiliarias.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
-                .Include(u => u.Cliente)
-                .Include(u => u.Corretor)
-                .Include(u => u.Perfil)
-                .FirstOrDefaultAsync(m => m.UsuarioId == id);
+            var usuario = _serviceUsuario.TragaPorId(id.Value);
+            UsuarioViewModel usuarioViewModel = usuario.ToUsuarioViewModel();
+            
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            return View(usuario);
+            return View(usuarioViewModel);
         }
 
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Cpf");
-            ViewData["CorretorId"] = new SelectList(_context.Corretores, "CorretorId", "Cpf");
-            ViewData["PerfilId"] = new SelectList(_context.Perfis, "PerfilId", "Nome");
+			ViewBag.Clientes = _serviceCliente.TrazerClientes().FindAll(x => x.Usuario == null).ToClientesViewModelList();
+			ViewBag.Corretores = _serviceCorretor.TrazerCorretores().FindAll(x => x.Usuario == null).ToCorretorViewModelList(); 
             return View();
         }
 
@@ -61,17 +66,24 @@ namespace Imobiliarias.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UsuarioId,Nome,Email,SenhaHash,DataCriacao,CorretorId,ClienteId,PerfilId")] Usuario usuario)
+        public async Task<IActionResult> Create(UsuarioViewModel usuario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(usuario);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _serviceUsuario.Criar(usuario.ToUsuario());
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Cpf", usuario.ClienteId);
-            ViewData["CorretorId"] = new SelectList(_context.Corretores, "CorretorId", "Cpf", usuario.CorretorId);
-            ViewData["PerfilId"] = new SelectList(_context.Perfis, "PerfilId", "Nome", usuario.PerfilId);
+
+            ViewBag.Clientes = _serviceCliente.TrazerClientes().FindAll(x => x.Usuario == null).ToClientesViewModelList();
+            ViewBag.Corretores = _serviceCorretor.TrazerCorretores().FindAll(x => x.Usuario == null).ToCorretorViewModelList();
             return View(usuario);
         }
 
@@ -83,14 +95,12 @@ namespace Imobiliarias.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = _serviceUsuario.TragaPorId(id.Value);
             if (usuario == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Cpf", usuario.ClienteId);
-            ViewData["CorretorId"] = new SelectList(_context.Corretores, "CorretorId", "Cpf", usuario.CorretorId);
-            ViewData["PerfilId"] = new SelectList(_context.Perfis, "PerfilId", "Nome", usuario.PerfilId);
+
             return View(usuario);
         }
 
@@ -99,7 +109,7 @@ namespace Imobiliarias.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,Nome,Email,SenhaHash,DataCriacao,CorretorId,ClienteId,PerfilId")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, UsuarioViewModel usuario)
         {
             if (id != usuario.UsuarioId)
             {
@@ -110,25 +120,14 @@ namespace Imobiliarias.Controllers
             {
                 try
                 {
-                    _context.Update(usuario);
-                    await _context.SaveChangesAsync();
+                    _serviceUsuario.Salvar(usuario.ToUsuario());
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception e)
                 {
-                    if (!UsuarioExists(usuario.UsuarioId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                ModelState.AddModelError("", e.Message);
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Clientes, "ClienteId", "Cpf", usuario.ClienteId);
-            ViewData["CorretorId"] = new SelectList(_context.Corretores, "CorretorId", "Cpf", usuario.CorretorId);
-            ViewData["PerfilId"] = new SelectList(_context.Perfis, "PerfilId", "Nome", usuario.PerfilId);
             return View(usuario);
         }
 
@@ -140,11 +139,7 @@ namespace Imobiliarias.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuarios
-                .Include(u => u.Cliente)
-                .Include(u => u.Corretor)
-                .Include(u => u.Perfil)
-                .FirstOrDefaultAsync(m => m.UsuarioId == id);
+            var usuario = _serviceUsuario.TragaPorId(id.Value);
             if (usuario == null)
             {
                 return NotFound();
@@ -158,19 +153,10 @@ namespace Imobiliarias.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario != null)
-            {
-                _context.Usuarios.Remove(usuario);
-            }
 
-            await _context.SaveChangesAsync();
+                _serviceUsuario.Remover(id);
+
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool UsuarioExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.UsuarioId == id);
         }
     }
 }

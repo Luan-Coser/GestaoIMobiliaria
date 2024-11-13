@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAO;
+using DAO.Repositorios.EF.ModuloCliente;
+using DAO.Repositorios.EF.ModuloCorretor;
+using DAO.Repositorios.EF.ModuloImovel;
+using DAO.Repositorios.EF.ModuloLogin;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliaria.Dominio.ModuloImovel;
-using Imobiliaria.Dominio.ModuloLogin;
+using Imobiliaria.Dominio.ModuloUsuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -43,80 +47,19 @@ public partial class ImobiliariaDbContext : DbContext
         optionsBuilder.UseSqlServer(ConnectionString);
     }	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Cliente>(entity =>
-        {
-            entity.HasKey(e => e.ClienteId).HasName("PK__Clientes__71ABD087E9E85EA4");
 
-            entity.HasIndex(e => e.Cpf, "UQ__Clientes__C1F89731AFD61B75").IsUnique();
+		ClienteEntityConfiguration clienteEntityConfiguration = new();
+		CorretorEntityConfiguration corretorEntityConfiguration = new();
+		ImovelEntityConfiguration imovelEntityConfiguration = new();
+		UsuarioEntityConfiguration usuarioEntityConfiguration = new();
 
-            entity.Property(e => e.Cpf)
-                .HasMaxLength(11)
-                .HasColumnName("CPF");
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Nome).HasMaxLength(100);
-            entity.Property(e => e.Telefone).HasMaxLength(20);
-        });
+		modelBuilder.ApplyConfiguration(clienteEntityConfiguration);
+		modelBuilder.ApplyConfiguration(corretorEntityConfiguration);
+		modelBuilder.ApplyConfiguration(imovelEntityConfiguration);
+		modelBuilder.ApplyConfiguration(usuarioEntityConfiguration);
 
-        modelBuilder.Entity<Corretor>(entity =>
-        {
-            entity.HasKey(e => e.CorretorId).HasName("PK__Corretor__4878C58F4DD00BB9");
 
-            entity.HasIndex(e => e.Cpf, "UQ__Corretor__C1F8973102DB28EB").IsUnique();
-
-            entity.HasIndex(e => e.Creci, "UQ__Corretor__C46674096488881F").IsUnique();
-
-            entity.Property(e => e.Cpf)
-                .HasMaxLength(11)
-                .HasColumnName("CPF");
-            entity.Property(e => e.Creci)
-                .HasMaxLength(20)
-                .HasColumnName("CRECI");
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.Nome).HasMaxLength(100);
-            entity.Property(e => e.Telefone).HasMaxLength(20);
-        });
-
-        modelBuilder.Entity<Favorito>(entity =>
-        {
-            entity.HasKey(e => e.FavoritoId).HasName("PK__Favorito__CFF711E5D2C73F92");
-
-            entity.HasOne(d => d.Cliente).WithMany(p => p.Favoritos)
-                .HasForeignKey(d => d.ClienteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Favoritos__Clien__45F365D3");
-
-            entity.HasOne(d => d.Imovel).WithMany(p => p.Favoritos)
-                .HasForeignKey(d => d.ImovelId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Favoritos__Imove__46E78A0C");
-        });
-
-        modelBuilder.Entity<Imovel>(entity =>
-        {
-            entity.HasKey(e => e.ImovelId).HasName("PK__Imoveis__68DA341C791DE99C");
-
-            entity.Property(e => e.Area).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.Disponivel).HasDefaultValue(true);
-            entity.Property(e => e.Endereco).HasMaxLength(255);
-            entity.Property(e => e.Negocio).HasDefaultValue(1);
-            entity.Property(e => e.Tipo).HasDefaultValue(1);
-            entity.Property(e => e.Valor).HasColumnType("decimal(18, 2)");
-
-            entity.HasOne(d => d.ClienteDono).WithMany(p => p.Imoveis)
-                .HasForeignKey(d => d.ClienteDonoId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Imoveis__Cliente__4316F928");
-
-            entity.HasOne(d => d.CorretorGestor).WithMany(p => p.ImoveiCorretorGestors)
-                .HasForeignKey(d => d.CorretorGestorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Imoveis__Correto__412EB0B6");
-
-            entity.HasOne(d => d.CorretorNegocio).WithMany(p => p.ImoveiCorretorNegocios)
-                .HasForeignKey(d => d.CorretorNegocioId)
-                .HasConstraintName("FK__Imoveis__Correto__4222D4EF");
-        });
-
+		
         modelBuilder.Entity<MensagensContato>(entity =>
         {
             entity.HasKey(e => e.MensagemId).HasName("PK__Mensagen__7C0322C6B2D1EA19");
@@ -146,5 +89,92 @@ public partial class ImobiliariaDbContext : DbContext
         OnModelCreatingPartial(modelBuilder);
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+		public void Seed()
+		{
+			//Database.EnsureCreated();
+
+			if (Corretores.Count() == 0)
+			{
+				Corretor corretor = new()
+				{
+					Cpf = "12345678915",
+					Creci = "123",
+					Email = "john@devolta.com",
+					Nome = "John 4",
+					Telefone = "666 99996669"
+				};
+				Corretores.Add(corretor);
+				SaveChanges();
+			}
+
+			if (Clientes.Count() == 0)
+			{
+				Cliente cliente = new()
+				{
+					Cpf = "12345678915",
+					Email = "john@devolta.com",
+					Nome = "John 4",
+					Telefone = "666 99996669"
+				};
+				Clientes.Add(cliente);
+				SaveChanges();
+			}
+
+			if (Imoveis.Count() == 0)
+			{
+				Imovel imovel = new Imovel()
+				{
+					Area = 50,
+					ClienteDonoId = Clientes.First().ClienteId,
+					CorretorGestorId = Corretores.First().CorretorId,
+					Descricao = "descricao",
+					Endereco = "na nuvem de poeira",
+					Disponivel = true,
+					Negocio = 1,
+					Tipo = 1,
+					Valor = 2300000
+				};
+				this.Imoveis.Add(imovel);
+				SaveChanges();
+			}
+
+			if (Usuarios.Count() == 0)
+			{
+				Usuarios.Add(new()
+				{
+					Email = "john2@wick.com",
+					Nome = "John2",
+					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
+					Perfil = new Perfil() { Nome = "Cliente" }//1
+				});
+				Usuarios.Add(new()
+				{
+					Email = "john3@wick.com",
+					Nome = "John3",
+					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
+					Perfil = new Perfil() { Nome = "Corretor" }//2
+				});
+				Usuarios.Add(new()
+				{
+					Email = "john@wick.com",
+					Nome = "John",
+					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
+					Perfil = new Perfil() { Nome = "Administrador" }//3
+				});
+				SaveChanges();
+			}
+
+			if (Perfis.Count() == 0)
+			{
+				Perfis.Add(new Perfil() { Nome = "Cliente" });
+				Perfis.Add(new Perfil() { Nome = "Corretor" });
+				Perfis.Add(new Perfil() { Nome = "Administrador" });
+				SaveChanges();
+			}
+
+			Perfil.Perfis = Perfis.ToList();
+		}
+
+
+	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

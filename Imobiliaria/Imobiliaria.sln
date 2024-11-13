@@ -16,17 +16,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-DOcs", "5-DOcs", "{1D1978
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliarias", "Imobiliarias\Imobiliarias.csproj", "{F19AF854-29B5-4EBC-80FF-854255A8CF91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imobiliarias", "Imobiliarias\Imobiliarias.csproj", "{F19AF854-29B5-4EBC-80FF-854255A8CF91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliaria.Dominio", "Dominio\Imobiliaria.Dominio.csproj", "{8D106119-A88F-4235-9779-7767AD91EBD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imobiliaria.Dominio", "Dominio\Imobiliaria.Dominio.csproj", "{8D106119-A88F-4235-9779-7767AD91EBD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAO", "DAO\DAO.csproj", "{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAO", "DAO\DAO.csproj", "{8CDB5E11-1045-44A6-AC58-7FF027D9B00A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imobiliaria.Testes", "Imobiliaria.Testes\Imobiliaria.Testes.csproj", "{20382D7F-57D2-4DF7-BFD3-F661AAF93792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imobiliaria.Testes", "Imobiliaria.Testes\Imobiliaria.Testes.csproj", "{20382D7F-57D2-4DF7-BFD3-F661AAF93792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{7683F6CC-4D4C-44A0-83CF-A954FB6BA614}"
 	ProjectSection(SolutionItems) = preProject
 		..\Docs\DataBase.sql\Script_Inicial.sql = ..\Docs\DataBase.sql\Script_Inicial.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compartilhado", "Compartilhado", "{71DACF66-4B40-4036-AE58-8B33FDD54557}"
+	ProjectSection(SolutionItems) = preProject
+		Dominio\ModuloLogin\IRepositorio.cs = Dominio\ModuloLogin\IRepositorio.cs
+		Dominio\ModuloLogin\IServiceModel.cs = Dominio\ModuloLogin\IServiceModel.cs
 	EndProjectSection
 EndProject
 Global
@@ -61,6 +67,7 @@ Global
 		{8CDB5E11-1045-44A6-AC58-7FF027D9B00A} = {E20574AB-ED83-467A-B2AB-2718E303C3E4}
 		{20382D7F-57D2-4DF7-BFD3-F661AAF93792} = {E3A54A6E-C285-4B14-97C6-D784CF4271E4}
 		{7683F6CC-4D4C-44A0-83CF-A954FB6BA614} = {1D1978DC-4F05-4CF2-9F2A-AC002B2854F6}
+		{71DACF66-4B40-4036-AE58-8B33FDD54557} = {0D8DDF05-094C-47CF-AAC3-BA036A693392}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13A5BF1A-730B-4FC4-A7B9-A130392D815E}

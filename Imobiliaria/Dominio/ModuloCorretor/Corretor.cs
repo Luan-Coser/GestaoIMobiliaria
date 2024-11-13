@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Imobiliaria.Dominio.ModuloImovel;
+using Imobiliaria.Dominio.ModuloUsuario;
 using Imobiliarias;
 
 namespace Imobiliaria.Dominio.ModuloCorretor;
@@ -19,7 +20,8 @@ public partial class Corretor
 
     public string? Email { get; set; }
 
-    public virtual ICollection<Imovel> ImoveiCorretorGestors { get; set; } = new List<Imovel>();
+	public Usuario? Usuario { get; set; }
+	public virtual ICollection<Imovel> ImoveiCorretorGestors { get; set; } = new List<Imovel>();
 
     public virtual ICollection<Imovel> ImoveiCorretorNegocios { get; set; } = new List<Imovel>();
 

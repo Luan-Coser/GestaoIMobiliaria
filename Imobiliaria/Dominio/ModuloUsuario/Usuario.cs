@@ -1,7 +1,7 @@
 ﻿using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliarias;
 
-namespace Imobiliaria.Dominio.ModuloLogin
+namespace Imobiliaria.Dominio.ModuloUsuario
 {
     public class Usuario
     {

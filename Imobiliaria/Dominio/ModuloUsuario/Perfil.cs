@@ -1,4 +1,4 @@
-﻿namespace Imobiliaria.Dominio.ModuloLogin
+﻿namespace Imobiliaria.Dominio.ModuloUsuario
 {
     public class Perfil
     {
@@ -7,6 +7,7 @@
 
         //Mapeamento 
         public virtual List<Usuario> Usuarios { get; set; }
+        public static IEnumerable<Perfil> Perfis { get; set; }
 
     }
 }

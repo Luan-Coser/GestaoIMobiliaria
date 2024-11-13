@@ -51,9 +51,12 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 
 			var app = builder.Build();
 
-
-			var db = app.Services.GetService<ImobiliariaDbContext>();
-			//db.Seed();
+			using (var scope = app.Services.CreateScope())
+			{
+				var services = scope.ServiceProvider;
+				var db = services.GetRequiredService<ImobiliariaDbContext>();
+				db.Seed();
+			}
 
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment())
