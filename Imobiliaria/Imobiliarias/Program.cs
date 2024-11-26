@@ -2,10 +2,12 @@ using DAO;
 using DAO.Repositorios.EF.ModuloCliente;
 using DAO.Repositorios.EF.ModuloCorretor;
 using DAO.Repositorios.EF.ModuloImovel;
+using DAO.Repositorios.EF.ModuloLogin;
 using Imobiliaria.Dominio.ModuloCliente;
 using Imobiliaria.Dominio.ModuloCorretor;
 using Imobiliaria.Dominio.ModuloImovel;
 using Imobiliaria.Dominio.ModuloLogin;
+using Imobiliaria.Dominio.ModuloUsuario;
 using Imobiliarias;
 using Microsoft.AspNetCore.Authentication.Cookies;
 namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
@@ -48,6 +50,9 @@ namespace Academia.Programador.Bk.Gestao.Imobiliaria.Web
 			builder.Services.AddTransient<IImovelRepositorio, ImovelRepositorio>();
 
 			builder.Services.AddTransient<IServiceLogin, ServiceLogin>();
+
+			builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
+			builder.Services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
 
 			var app = builder.Build();
 

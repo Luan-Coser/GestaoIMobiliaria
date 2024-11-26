@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Usuario>
+﻿@model IEnumerable<Imobiliarias.Models.UsuarioViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,19 +19,19 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SenhaHash)
+                @Html.DisplayNameFor(model => model.Senha)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataCriacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente)
+                @Html.DisplayNameFor(model => model.ClienteId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Corretor)
+                @Html.DisplayNameFor(model => model.CorretorId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Perfil)
+                @Html.DisplayNameFor(model => model.PerfilId)
             </th>
             <th></th>
         </tr>
@@ -46,20 +46,12 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SenhaHash)
+                @Html.DisplayFor(modelItem => item.Senha)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataCriacao)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Cpf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Corretor.Cpf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Perfil.Nome)
-            </td>
+           
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UsuarioId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.UsuarioId">Details</a> |

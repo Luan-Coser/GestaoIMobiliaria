@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAO.Repositorios.EF.ModuloLogin
 {
-    class UsuarioRepositorio : IUsuarioRepositorio
+    public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly ImobiliariaDbContext _context;
 

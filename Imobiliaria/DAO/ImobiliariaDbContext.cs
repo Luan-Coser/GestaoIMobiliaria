@@ -147,20 +147,6 @@ public partial class ImobiliariaDbContext : DbContext
 					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
 					Perfil = new Perfil() { Nome = "Cliente" }//1
 				});
-				Usuarios.Add(new()
-				{
-					Email = "john3@wick.com",
-					Nome = "John3",
-					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
-					Perfil = new Perfil() { Nome = "Corretor" }//2
-				});
-				Usuarios.Add(new()
-				{
-					Email = "john@wick.com",
-					Nome = "John",
-					SenhaHash = "AQAAAAIAAYagAAAAEAcwH8ucYtATRdWjLP2Rz6CXgDRW7w6I2q15wZcuyWkPa2QwIEM43l6cCdfwx1edOw==",
-					Perfil = new Perfil() { Nome = "Administrador" }//3
-				});
 				SaveChanges();
 			}
 
